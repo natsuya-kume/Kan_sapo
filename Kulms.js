@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet,Text,Image,View } from "react-native";
 
 import HomeScreen from "./src/screens/HomeScreen";
 import PublicScreen from "./src/screens/PublicScreen";
@@ -27,6 +27,8 @@ import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import useAuthenticateUser from "./src/hooks/useAuthenticateUser";
 import TermsScreen from "./src/screens/AppSwitchNavigator/TermsScreen";
+
+import kansapo_header from "./assets/kansapo_header.png"
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -116,9 +118,17 @@ const getHeaderTitle = (route) => {
   const hideOnScreens = ["HomeTabNavigator"];
   switch (routeName) {
     case "TermsTabNavigator":
-      return "Kanさぽ";
+      return (
+        <View style={{alignItems:"center",display:"flex",justifyContent:"center"}}>
+          <Image source={kansapo_header} style={{width:130,height:35}}/>
+        </View>
+      );
     default:
-      return "Kanさぽ";
+      return (
+        <View style={{alignItems:"center",display:"flex",justifyContent:"center"}}>
+          <Image source={kansapo_header} style={{width:130,height:35}}/>
+        </View>
+      );
   }
 };
 
