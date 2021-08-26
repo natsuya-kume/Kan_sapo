@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Kulms",
-    "slug": "Kulms",
+    "name": "Kanさぽ",
+    "slug": "Kan-sprt-slug",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -11,22 +11,22 @@
       "backgroundColor": "#ffffff"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "enabled":true,
+      "fallbackToCacheTimeout": 30000,
+      "checkAutomatically":"ON_LOAD"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      }
+      "buildNumber": "1.0.0",
+      "bundleIdentifier": "com.timetable.TimeTableApp"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+
+    "android": {
+      "permissions": ["READ_EXTERNAL_STORAGE", "WRITE_EXTERNAL_STORAGE"],
+      "package": "org.swallow.rnsample.app"
     }
   }
 }
