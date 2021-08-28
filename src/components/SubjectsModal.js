@@ -1,20 +1,14 @@
 // 授業リストを管理する
 import React, { useEffect, useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  FlatList,
-  TouchableOpacity,
-} from "react-native";
+import { Text, View, FlatList, TouchableOpacity } from "react-native";
 import { Form, Item, Input, Label, Icon } from "native-base";
 import ListItem from "./ListItem";
 import { AntDesign } from "@expo/vector-icons";
 import firebase from "firebase/app";
 import { snapshotToArray } from "../helpers/FirebaseHelpers";
 import { loadSelectedSubjects } from "../redux/actions";
-
 import { useSelector, useDispatch } from "react-redux";
+import { useTheme } from "@react-navigation/native";
 
 const SubjectsModal = (props) => {
   // 元々管理しているデータを管理
@@ -26,6 +20,8 @@ const SubjectsModal = (props) => {
 
   const user = useSelector((state) => state.auth.currentUser);
   const dispatch = useDispatch();
+
+  const { colors } = useTheme();
 
   // モーダルが開閉されるときに元の授業データを取得
   useEffect(() => {
@@ -105,21 +101,59 @@ const SubjectsModal = (props) => {
   );
 
   return (
-    <View style={styles.modal}>
-      <TouchableOpacity onPress={props.nav} style={styles.closeButton}>
+    <View
+      style={{
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: colors.background,
+        height: 550,
+        borderRadius: 10,
+      }}
+    >
+      <TouchableOpacity
+        onPress={props.nav}
+        style={{ position: "absolute", marginRight: 5, top: 5, right: 0 }}
+      >
         <View>
-          <AntDesign name="close" size={30} />
+          <AntDesign name="close" size={30} color={colors.textMain} />
         </View>
       </TouchableOpacity>
       <View>
-        <Text style={styles.titleText}>授業の追加</Text>
+        <Text
+          style={{
+            marginTop: 20,
+            fontSize: 20,
+            fontWeight: "300",
+            color: colors.textMain,
+          }}
+        >
+          授業の追加
+        </Text>
       </View>
       <View>
-        <Form style={styles.searchInput}>
+        <Form
+          style={{
+            marginTop: 5,
+            marginBottom: 20,
+            justifyContent: "space-between",
+            flexDirection: "row",
+            alignItems: "center",
+            height: 50,
+            width: 300,
+            borderColor: "black",
+            paddingHorizontal: 20,
+          }}
+        >
           <Item floatingLabel>
-            <Label>授業名で検索</Label>
-            <Icon active name="search" />
-            <Input value={searchWord} onChangeText={searchSubjects} />
+            <Label style={{ color: colors.textMain, opacity: 0.8 }}>
+              授業名で検索
+            </Label>
+            <Icon active name="search" style={{ color: colors.textMain }} />
+            <Input
+              value={searchWord}
+              onChangeText={searchSubjects}
+              style={{ color: colors.textMain }}
+            />
           </Item>
         </Form>
       </View>
@@ -132,35 +166,3 @@ const SubjectsModal = (props) => {
   );
 };
 export default SubjectsModal;
-
-const styles = StyleSheet.create({
-  modal: {
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#fff",
-    height: 550,
-    borderRadius: 10,
-  },
-  closeButton: {
-    position: "absolute",
-    marginRight: 5,
-    top: 5,
-    right: 0,
-  },
-  titleText: {
-    marginTop: 20,
-    fontSize: 20,
-    fontWeight: "300",
-  },
-  searchInput: {
-    marginTop: 5,
-    marginBottom: 20,
-    justifyContent: "space-between",
-    flexDirection: "row",
-    alignItems: "center",
-    height: 50,
-    width: 300,
-    borderColor: "black",
-    paddingHorizontal: 20,
-  },
-});

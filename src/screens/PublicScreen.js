@@ -9,8 +9,11 @@ import {
   Button,
 } from "native-base";
 import { Linking } from "react-native";
+import { useTheme } from "@react-navigation/native";
 
 const PublicScreen = () => {
+  const { colors } = useTheme();
+
   // lmsを開く関数
   const openKulms = () => {
     Linking.openURL("https://kulms.tl.kansai-u.ac.jp/").then((supported) => {
@@ -43,14 +46,18 @@ const PublicScreen = () => {
       <List>
         <ListItem thumbnail>
           <Body>
-            <Text>関大LMS(公式)</Text>
-            <Text note numberOfLines={1}>
+            <Text style={{ color: colors.textMain }}>関大LMS(公式)</Text>
+            <Text style={{ color: colors.textMain }} note numberOfLines={1}>
               KU Learning Management System
             </Text>
           </Body>
           <Right>
-            <Button transparent onPress={openKulms}>
-              <Text style={{ color: "skyblue", fontWeight: "500" }}>
+            <Button
+              transparent
+              onPress={openKulms}
+              style={{ backgroundColor: colors.buttonColor, borderRadius: 20 }}
+            >
+              <Text style={{ color: "black", fontWeight: "500" }}>
                 サイトへ
               </Text>
             </Button>
@@ -58,14 +65,20 @@ const PublicScreen = () => {
         </ListItem>
         <ListItem thumbnail>
           <Body>
-            <Text>インフォメーションシステム</Text>
-            <Text note numberOfLines={1}>
+            <Text style={{ color: colors.textMain }}>
+              インフォメーションシステム
+            </Text>
+            <Text style={{ color: colors.textMain }} note numberOfLines={1}>
               InformationSystem
             </Text>
           </Body>
           <Right>
-            <Button transparent onPress={openInfoSystem}>
-              <Text style={{ color: "skyblue", fontWeight: "500" }}>
+            <Button
+              transparent
+              onPress={openInfoSystem}
+              style={{ backgroundColor: colors.buttonColor, borderRadius: 20 }}
+            >
+              <Text style={{ color: "black", fontWeight: "500" }}>
                 サイトへ
               </Text>
             </Button>
