@@ -1,12 +1,15 @@
 // 最初の画面を表示するスクリーン
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, StatusBar } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import CustomActionButton from "../../components/CustomActionButton";
 import { useNavigation } from "@react-navigation/native";
+import { useTheme } from "@react-navigation/native";
 
 const WelcomeScreen = () => {
   const navigation = useNavigation();
+  const { colors } = useTheme();
+  const theme = useTheme();
 
   return (
     <View
@@ -22,8 +25,12 @@ const WelcomeScreen = () => {
           justifyContent: "center",
         }}
       >
-        <AntDesign name="table" size={150} color="blue" />
-        <Text style={{ fontSize: 50, fontWeight: "100" }}>Kanさぽ</Text>
+        <AntDesign name="table" size={150} color={colors.welcomeTableColor} />
+        <Text
+          style={{ fontSize: 50, fontWeight: "100", color: colors.textMain }}
+        >
+          Kanさぽ
+        </Text>
       </View>
       <View
         style={{
@@ -39,10 +46,11 @@ const WelcomeScreen = () => {
             backgroundColor: "transparent",
             borderWidth: 1,
             marginBottom: 10,
+            borderColor: colors.textMain,
           }}
           onPress={() => navigation.navigate("SignUpScreen")}
         >
-          <Text>新規登録</Text>
+          <Text style={{ color: colors.textMain }}>新規登録</Text>
         </CustomActionButton>
         <CustomActionButton
           style={{
@@ -50,12 +58,14 @@ const WelcomeScreen = () => {
             backgroundColor: "transparent",
             borderWidth: 1,
             marginBottom: 10,
+            borderColor: colors.textMain,
           }}
           onPress={() => navigation.navigate("LoginScreen")}
         >
-          <Text>ログイン</Text>
+          <Text style={{ color: colors.textMain }}>ログイン</Text>
         </CustomActionButton>
       </View>
+      <StatusBar barStyle={theme.dark ? "light-content" : "dark-content"} />
     </View>
   );
 };

@@ -7,6 +7,7 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/database";
 import { useDispatch } from "react-redux";
+import { useTheme } from "@react-navigation/native";
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -14,6 +15,9 @@ const LoginScreen = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
+
+  const { colors } = useTheme();
+  const theme = useTheme();
 
   const onSignIn = async () => {
     if (email && password) {
@@ -48,7 +52,7 @@ const LoginScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={{ flex: 1, marginTop: 10 }}>
       {isLoading ? (
         <View
           style={[
@@ -68,21 +72,40 @@ const LoginScreen = ({ navigation }) => {
         <View style={{ marginHorizontal: 5 }}>
           <Form>
             <Item floatingLabel>
-              <Label>メールアドレス</Label>
-              <Input onChangeText={(email) => setEmail(email)} />
+              <Label style={{ color: colors.textMain, opacity: 0.8 }}>
+                メールアドレス
+              </Label>
+              <Input
+                onChangeText={(email) => setEmail(email)}
+                style={{ color: colors.textMain }}
+              />
             </Item>
             <Item floatingLabel>
-              <Label>パスワード</Label>
+              <Label style={{ color: colors.textMain, opacity: 0.8 }}>
+                パスワード
+              </Label>
               <Input
                 secureTextEntry
                 onChangeText={(password) => setPassword(password)}
+                style={{ color: colors.textMain }}
               />
             </Item>
           </Form>
         </View>
-        <View style={styles.buttonContainer}>
-          <CustomActionButton onPress={onSignIn} style={styles.loginButton}>
-            <Text style={{ fontWeight: "400" }}>ログイン</Text>
+        <View style={{ alignItems: "center", marginTop: 20 }}>
+          <CustomActionButton
+            onPress={onSignIn}
+            style={{
+              borderWidth: 1,
+              backgroundColor: "transparent",
+              marginTop: 20,
+              width: 200,
+              borderColor: colors.textMain,
+            }}
+          >
+            <Text style={{ fontWeight: "400", color: colors.textMain }}>
+              ログイン
+            </Text>
           </CustomActionButton>
         </View>
       </View>
@@ -91,20 +114,3 @@ const LoginScreen = ({ navigation }) => {
 };
 
 export default LoginScreen;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: 10,
-  },
-  buttonContainer: {
-    alignItems: "center",
-    marginTop: 20,
-  },
-  loginButton: {
-    borderWidth: 1,
-    backgroundColor: "transparent",
-    marginTop: 20,
-    width: 200,
-  },
-});

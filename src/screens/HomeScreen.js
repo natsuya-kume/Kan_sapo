@@ -3,12 +3,13 @@ import React, { useState, useEffect } from "react";
 import {
   Text,
   View,
-  StyleSheet,
   FlatList,
   SafeAreaView,
   TouchableOpacity,
   Dimensions,
+  StatusBar,
 } from "react-native";
+import { useTheme } from "@react-navigation/native";
 import { loadSelectedSubjects } from "../redux/actions";
 const ITEM_WIDTH = Dimensions.get("window").width;
 const ITEM_HEIGHT = Dimensions.get("window").height;
@@ -32,6 +33,9 @@ const Home = (props) => {
   const user = useSelector((state) => state.auth.currentUser);
   const subjects = useSelector((state) => state.subjects.selectedSubjects);
 
+  const theme = useTheme();
+  const { colors } = useTheme();
+
   useEffect(() => {
     const fetchData = async () => {
       const selectedSubjects = await firebase
@@ -49,7 +53,7 @@ const Home = (props) => {
   const toggleEditModal = (item, index) => {
     setIsEditModal(!isEditModal);
     // index番号があるときだけセットする　→editModalを閉じたときはセットしない
-    if (index) {
+    if (index || index === 0) {
       // table[index].subject[0]を編集データにいれる
       setToEditData(table[index].subject[0]);
     }
@@ -82,7 +86,9 @@ const Home = (props) => {
                   paddingTop: 9,
                 }}
               >
-                <Text style={{ fontSize: 13 }}>{a.subject}</Text>
+                <Text style={{ fontSize: 13, color: colors.textMain }}>
+                  {a.subject}
+                </Text>
                 {a.classroom === "" || !a.classroom ? null : (
                   <Text
                     key={a.classroom}
@@ -114,13 +120,27 @@ const Home = (props) => {
                   paddingTop: 9,
                 }}
               >
-                <Text style={{ fontSize: 13 }}>{a.subject}</Text>
+                <Text
+                  style={{
+                    fontSize: 13,
+                    color:
+                      a.backgroundColor && a.backgroundColor !== "#2B3044"
+                        ? "#2B3044"
+                        : colors.textMain,
+                  }}
+                >
+                  {a.subject}
+                </Text>
                 {a.classroom === "" || !a.classroom ? null : (
                   <Text
                     key={a.classroom}
                     style={{
                       marginHorizontal: 3,
                       fontSize: 11,
+                      color:
+                        a.backgroundColor && a.backgroundColor !== "#2B3044"
+                          ? "#2B3044"
+                          : colors.textMain,
                     }}
                   >
                     {a.classroom}
@@ -133,7 +153,15 @@ const Home = (props) => {
       }
     });
     return (
-      <View style={styles.table}>
+      <View
+        style={{
+          margin: 1,
+          backgroundColor: colors.subjectBackgroundColor,
+          width: ITEM_WIDTH / 6.6,
+          height: ITEM_HEIGHT / 8.3,
+        }}
+      >
+        <StatusBar barStyle={theme.dark ? "light-content" : "dark-content"} />
         <Text>{map}</Text>
       </View>
     );
@@ -188,7 +216,7 @@ const Home = (props) => {
   // 時間の表示
   const time = ["1", "2", "3", "4", "5", "6"];
   return (
-    <View style={styles.container}>
+    <View style={{ paddingLeft: 4, paddingRight: 5, marginTop: 5 }}>
       <View style={{ flexDirection: "row" }}>
         <View>
           <FlatList
@@ -197,7 +225,15 @@ const Home = (props) => {
             numColumns={1}
             renderItem={({ item }) => (
               <View>
-                <Text style={styles.blank}>{item}</Text>
+                <Text
+                  style={{
+                    width: 13,
+                    margin: 1,
+                    backgroundColor: colors.periodBackgroundColor,
+                  }}
+                >
+                  {item}
+                </Text>
               </View>
             )}
           />
@@ -210,7 +246,17 @@ const Home = (props) => {
             horizontal
             renderItem={({ item }) => (
               <View>
-                <Text style={styles.period}>{item}</Text>
+                <Text
+                  style={{
+                    margin: 1,
+                    textAlign: "center",
+                    width: ITEM_WIDTH / 6.6,
+                    backgroundColor: colors.periodBackgroundColor,
+                    color: colors.textMain,
+                  }}
+                >
+                  {item}
+                </Text>
               </View>
             )}
           />
@@ -224,7 +270,19 @@ const Home = (props) => {
             numColumns={1}
             renderItem={({ item }) => (
               <View>
-                <Text style={styles.time}>{item}</Text>
+                <Text
+                  style={{
+                    width: 13,
+                    margin: 1,
+                    color: colors.textMain,
+                    backgroundColor: colors.periodBackgroundColor,
+                    textAlign: "center",
+                    lineHeight: ITEM_HEIGHT / 8.3,
+                    height: ITEM_HEIGHT / 8.3,
+                  }}
+                >
+                  {item}
+                </Text>
               </View>
             )}
           />
@@ -266,36 +324,3 @@ const Home = (props) => {
 };
 
 export default Home;
-
-const styles = StyleSheet.create({
-  container: {
-    paddingLeft: 4,
-    paddingRight: 5,
-    marginTop: 5,
-  },
-  blank: {
-    width: 13,
-    margin: 1,
-    backgroundColor: "skyblue",
-  },
-  period: {
-    margin: 1,
-    textAlign: "center",
-    width: ITEM_WIDTH / 6.6,
-    backgroundColor: "skyblue",
-  },
-  time: {
-    width: 13,
-    margin: 1,
-    backgroundColor: "skyblue",
-    textAlign: "center",
-    lineHeight: ITEM_HEIGHT / 8.3,
-    height: ITEM_HEIGHT / 8.3,
-  },
-  table: {
-    margin: 1,
-    backgroundColor: "#dddddd",
-    width: ITEM_WIDTH / 6.6,
-    height: ITEM_HEIGHT / 8.3,
-  },
-});

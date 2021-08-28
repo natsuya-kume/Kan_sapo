@@ -1,16 +1,13 @@
 // SubjectsModal内で表示する授業リストの詳細を表示するコンポーネント
 import React from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Linking,
-} from "react-native";
+import { View, Text, TouchableOpacity, Linking } from "react-native";
 import { Toast } from "native-base";
 import { Entypo } from "@expo/vector-icons";
+import { useTheme } from "@react-navigation/native";
 
 const ListItem = ({ item, onPress, closeModal }) => {
+  const { colors } = useTheme();
+
   // シラバスを開く関数
   const openSyllabus = () => {
     Linking.openURL(item.syllabus).then((supported) => {
@@ -22,15 +19,33 @@ const ListItem = ({ item, onPress, closeModal }) => {
     });
   };
   return (
-    <View style={styles.subjectsContainer}>
+    <View
+      style={{
+        minHeight: 100,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        flex: 1,
+        borderBottomWidth: 1,
+        borderBottomColor: colors.buttonColor,
+      }}
+    >
       <TouchableOpacity onPress={openSyllabus}>
         <View>
-          <Entypo name="open-book" size={20} color="skyblue" />
+          <Entypo name="open-book" size={20} color={colors.buttonColor} />
         </View>
       </TouchableOpacity>
-      <View style={styles.subjectsInfo}>
-        <Text style={styles.listItemTitle}>{item.subject}</Text>
-        <Text style={styles.listItemTitle}>{item.term}</Text>
+      <View style={{ paddingLeft: 5, width: 200 }}>
+        <Text
+          style={{ fontSize: 20, fontWeight: "100", color: colors.textMain }}
+        >
+          {item.subject}
+        </Text>
+        <Text
+          style={{ fontSize: 20, fontWeight: "100", color: colors.textMain }}
+        >
+          {item.term}
+        </Text>
       </View>
       <TouchableOpacity
         onPress={onPress}
@@ -43,7 +58,16 @@ const ListItem = ({ item, onPress, closeModal }) => {
           })
         }
       >
-        <View style={styles.button}>
+        <View
+          style={{
+            width: 50,
+            height: 40,
+            backgroundColor: colors.buttonColor,
+            borderRadius: 50,
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
           <Text>追加</Text>
         </View>
       </TouchableOpacity>
@@ -52,31 +76,3 @@ const ListItem = ({ item, onPress, closeModal }) => {
 };
 
 export default ListItem;
-
-const styles = StyleSheet.create({
-  subjectsContainer: {
-    minHeight: 100,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    flex: 1,
-    borderBottomWidth: 1,
-    borderBottomColor: "skyblue",
-  },
-  subjectsInfo: {
-    paddingLeft: 5,
-    width: 200,
-  },
-  listItemTitle: {
-    fontSize: 20,
-    fontWeight: "100",
-  },
-  button: {
-    width: 50,
-    height: 40,
-    backgroundColor: "skyblue",
-    borderRadius: 50,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

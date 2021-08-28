@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   Linking,
   LogBox,
+  StatusBar,
 } from "react-native";
 import {
   Form,
@@ -26,8 +27,8 @@ import {
 } from "native-base";
 import { AntDesign, Entypo } from "@expo/vector-icons";
 import firebase from "firebase/app";
-
 import { useSelector } from "react-redux";
+import { useTheme } from "@react-navigation/native";
 
 const EditSubject = (props) => {
   useEffect(() => {
@@ -42,6 +43,8 @@ const EditSubject = (props) => {
     props.editData.backgroundColor
   );
   const user = useSelector((state) => state.auth.currentUser);
+  const { colors } = useTheme();
+  const theme = useTheme();
 
   // シラバスを開く関数
   const openSyllabus = () => {
@@ -158,31 +161,69 @@ const EditSubject = (props) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View
+      style={{
+        backgroundColor: colors.background,
+        height: 550,
+        borderRadius: 10,
+        paddingVertical: 15,
+        paddingHorizontal: 20,
+      }}
+    >
       <TouchableOpacity onPress={props.nav} style={styles.closeButton}>
         <View>
-          <AntDesign name="close" size={30} style={{ borderRadius: 50 }} />
+          <AntDesign
+            name="close"
+            size={30}
+            style={{ borderRadius: 50, color: colors.textMain }}
+          />
         </View>
       </TouchableOpacity>
       <View>
-        <Text style={styles.title}>授業の編集</Text>
+        <Text
+          style={{
+            marginTop: 20,
+            fontSize: 20,
+            fontWeight: "300",
+            textAlign: "center",
+            color: colors.textMain,
+          }}
+        >
+          授業の編集
+        </Text>
       </View>
 
       <ScrollView>
         <View style={styles.infoContainer}>
-          <Text style={styles.infoTitle}>授業名：{props.editData.subject}</Text>
+          <Text
+            style={{ fontSize: 20, fontWeight: "100", color: colors.textMain }}
+          >
+            授業名：{props.editData.subject}
+          </Text>
         </View>
         <View style={styles.infoContainer}>
-          <Text style={styles.infoTitle}>開講時限：{props.editData.term}</Text>
+          <Text
+            style={{ fontSize: 20, fontWeight: "100", color: colors.textMain }}
+          >
+            開講時限：{props.editData.term}
+          </Text>
         </View>
 
         <View style={styles.editClassroomContaimer}>
-          <Text style={styles.infoTitle}>授業教室：</Text>
+          <Text
+            style={{ fontSize: 20, fontWeight: "100", color: colors.textMain }}
+          >
+            授業教室：
+          </Text>
 
           <View>
             <Form style={styles.searchInput}>
               <Item>
-                <Input value={classroom} onChangeText={getRoomInfo} />
+                <Input
+                  value={classroom}
+                  onChangeText={getRoomInfo}
+                  style={{ color: colors.textMain }}
+                />
               </Item>
             </Form>
           </View>
@@ -197,14 +238,29 @@ const EditSubject = (props) => {
                 })
               }
             >
-              <View style={styles.saveButton}>
-                <Text>保存</Text>
+              <View
+                style={{
+                  width: 40,
+                  height: 40,
+                  borderColor: colors.textMain,
+                  borderWidth: 1,
+                  borderRadius: 30,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginLeft: 10,
+                }}
+              >
+                <Text style={{ color: colors.textMain }}>保存</Text>
               </View>
             </TouchableOpacity>
           </View>
         </View>
         <View style={styles.editClassroomContaimer}>
-          <Text style={styles.infoTitle}>メモ：</Text>
+          <Text
+            style={{ fontSize: 20, fontWeight: "100", color: colors.textMain }}
+          >
+            メモ：
+          </Text>
 
           <View>
             <Form style={styles.textArea}>
@@ -213,6 +269,7 @@ const EditSubject = (props) => {
                 onChangeText={getMemoInfo}
                 rowSpan={3}
                 bordered
+                style={{ color: colors.textMain }}
               />
             </Form>
           </View>
@@ -227,14 +284,29 @@ const EditSubject = (props) => {
                 })
               }
             >
-              <View style={styles.saveButton}>
-                <Text>保存</Text>
+              <View
+                style={{
+                  width: 40,
+                  height: 40,
+                  borderColor: colors.textMain,
+                  borderWidth: 1,
+                  borderRadius: 30,
+                  alignItems: "center",
+                  justifyContent: "center",
+                  marginLeft: 10,
+                }}
+              >
+                <Text style={{ color: colors.textMain }}>保存</Text>
               </View>
             </TouchableOpacity>
           </View>
         </View>
         <View style={styles.editClassroomContaimer}>
-          <Text style={styles.infoTitle}>欠席回数：</Text>
+          <Text
+            style={{ fontSize: 20, fontWeight: "100", color: colors.textMain }}
+          >
+            欠席回数：
+          </Text>
           <View>
             <Form style={styles.searchInput}>
               <Item>
@@ -242,6 +314,7 @@ const EditSubject = (props) => {
                   keyboardType="number-pad"
                   value={absentCount}
                   onChangeText={getAbsentInfo}
+                  style={{ color: colors.textMain }}
                 />
               </Item>
             </Form>
@@ -255,33 +328,62 @@ const EditSubject = (props) => {
               })
             }
           >
-            <View style={styles.saveButton}>
-              <Text>保存</Text>
+            <View
+              style={{
+                width: 40,
+                height: 40,
+                borderColor: colors.textMain,
+                borderWidth: 1,
+                borderRadius: 30,
+                alignItems: "center",
+                justifyContent: "center",
+                marginLeft: 10,
+              }}
+            >
+              <Text style={{ color: colors.textMain }}>保存</Text>
             </View>
           </TouchableOpacity>
         </View>
         <View style={styles.editClassroomContaimer}>
-          <Text style={styles.infoTitle}>背景色：</Text>
+          <Text
+            style={{ fontSize: 20, fontWeight: "100", color: colors.textMain }}
+          >
+            背景色：
+          </Text>
           <View>
             <Picker
               renderHeader={(backAction) => (
-                <Header style={{ backgroundColor: "skyblue" }}>
+                <Header style={{ backgroundColor: colors.background }}>
+                  <StatusBar
+                    barStyle={theme.dark ? "light-content" : "dark-content"}
+                  />
                   <Left>
                     <Button transparent onPress={backAction}>
-                      <Icon name="arrow-back" style={{ color: "black" }} />
+                      <Icon
+                        name="arrow-back"
+                        style={{ color: colors.textMain }}
+                      />
                     </Button>
                   </Left>
                   <Body style={{ flex: 3 }}>
-                    <Title style={{ color: "black" }}>背景色を選択</Title>
+                    <Title style={{ color: colors.textMain }}>
+                      背景色を選択
+                    </Title>
                   </Body>
                   <Right />
                 </Header>
               )}
               mode="dropdown"
-              iosIcon={<Icon name="arrow-down" />}
+              iosIcon={
+                <Icon name="arrow-down" style={{ color: colors.textMain }} />
+              }
               selectedValue={backgroundColor}
               onValueChange={onValueChange}
+              textStyle={{ color: colors.textMain }}
+              itemTextStyle={{ color: colors.textMain }}
+              modalStyle={{ backgroundColor: colors.background }}
             >
+              <Picker.Item label="黒色" value="#2B3044" />
               <Picker.Item label="灰色" value="#ddd" />
               <Picker.Item label="黄色" value="yellow" />
               <Picker.Item label="緑色" value="lawngreen" />
@@ -312,8 +414,19 @@ const EditSubject = (props) => {
             }
             onPressOut={props.nav}
           >
-            <View style={styles.saveButton}>
-              <Text>保存</Text>
+            <View
+              style={{
+                width: 40,
+                height: 40,
+                borderColor: colors.textMain,
+                borderWidth: 1,
+                borderRadius: 30,
+                alignItems: "center",
+                justifyContent: "center",
+                marginLeft: 10,
+              }}
+            >
+              <Text style={{ color: colors.textMain }}>保存</Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -331,14 +444,38 @@ const EditSubject = (props) => {
             })
           }
         >
-          <View style={styles.deleteButton}>
+          <View
+            style={{
+              height: 50,
+              backgroundColor: colors.deleteButtonColor,
+              paddingHorizontal: 5,
+              borderRadius: 30,
+              alignItems: "center",
+              justifyContent: "center",
+              marginTop: 30,
+              display: "flex",
+              flexDirection: "row",
+            }}
+          >
             <Icon name="trash" />
             <Text style={{ textAlign: "center" }}>この授業を削除</Text>
           </View>
         </TouchableOpacity>
 
         <TouchableOpacity onPress={openSyllabus}>
-          <View style={styles.syllabusButton}>
+          <View
+            style={{
+              height: 50,
+              backgroundColor: colors.buttonColor,
+              borderRadius: 30,
+              alignItems: "center",
+              justifyContent: "center",
+              marginTop: 30,
+              display: "flex",
+              flexDirection: "row",
+              paddingHorizontal: 5,
+            }}
+          >
             <Entypo size={24} name="open-book" />
             <Text style={{ textAlign: "center" }}>シラバスを参照</Text>
           </View>
@@ -351,24 +488,11 @@ const EditSubject = (props) => {
 export default EditSubject;
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#fff",
-    height: 550,
-    borderRadius: 10,
-    paddingVertical: 15,
-    paddingHorizontal: 20,
-  },
   closeButton: {
     position: "absolute",
     marginRight: 5,
     top: 5,
     right: 0,
-  },
-  title: {
-    marginTop: 20,
-    fontSize: 20,
-    fontWeight: "300",
-    textAlign: "center",
   },
   infoContainer: {
     marginTop: 20,
@@ -398,7 +522,8 @@ const styles = StyleSheet.create({
   },
   deleteButton: {
     height: 50,
-    backgroundColor: "pink",
+    // backgroundColor: "pink",
+    backgroundColor: "tomato",
     paddingHorizontal: 5,
     borderRadius: 30,
     alignItems: "center",
@@ -406,17 +531,6 @@ const styles = StyleSheet.create({
     marginTop: 30,
     display: "flex",
     flexDirection: "row",
-  },
-  syllabusButton: {
-    height: 50,
-    backgroundColor: "skyblue",
-    borderRadius: 30,
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 30,
-    display: "flex",
-    flexDirection: "row",
-    paddingHorizontal: 5,
   },
   saveButton: {
     width: 40,
@@ -427,15 +541,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginLeft: 10,
-  },
-  sampleBackgroundColorButton: {
-    width: 40,
-    height: 40,
-    borderColor: "black",
-    borderWidth: 1,
-    borderRadius: 30,
-    alignItems: "center",
-    justifyContent: "center",
   },
   bottom: {
     flexDirection: "row",

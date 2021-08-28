@@ -8,6 +8,7 @@ import "firebase/auth";
 import "firebase/database";
 import { useDispatch } from "react-redux";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import { useTheme } from "@react-navigation/native";
 
 const SignUpScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -15,6 +16,9 @@ const SignUpScreen = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
+
+  const { colors } = useTheme();
+  const theme = useTheme();
 
   const onSignUp = async () => {
     if (email && password) {
@@ -66,13 +70,21 @@ const SignUpScreen = ({ navigation }) => {
       <View style={{ marginHorizontal: 5 }}>
         <Form>
           <Item floatingLabel>
-            <Label>メールアドレス</Label>
-            <Input onChangeText={(email) => setEmail(email)} />
+            <Label style={{ color: colors.textMain, opacity: 0.8 }}>
+              メールアドレス
+            </Label>
+            <Input
+              onChangeText={(email) => setEmail(email)}
+              style={{ color: colors.textMain }}
+            />
           </Item>
           <Item floatingLabel>
-            <Label>パスワード</Label>
+            <Label style={{ color: colors.textMain, opacity: 0.8 }}>
+              パスワード
+            </Label>
             <Input
               secureTextEntry
+              style={{ color: colors.textMain }}
               onChangeText={(password) => setPassword(password)}
             />
           </Item>
@@ -85,15 +97,29 @@ const SignUpScreen = ({ navigation }) => {
         }}
       >
         <TouchableOpacity onPress={() => navigation.navigate("TermsScreen")}>
-          <Text style={{ color: "#009bc6", fontSize: 15 }}>利用規約(必読)</Text>
+          <Text style={{ color: colors.linkColor, fontSize: 15 }}>
+            利用規約(必読)
+          </Text>
         </TouchableOpacity>
         <View style={{ marginTop: 10 }}>
-          <Text>※新規登録をした場合、利用規約に同意したものとします</Text>
+          <Text style={{ color: colors.textMain }}>
+            ※新規登録をした場合、利用規約に同意したものとします
+          </Text>
         </View>
       </View>
       <View style={styles.buttonContainer}>
-        <CustomActionButton onPress={onSignUp} style={styles.signUpButton}>
-          <Text style={{ fontWeight: "400" }}>新規登録</Text>
+        <CustomActionButton
+          onPress={onSignUp}
+          style={{
+            borderWidth: 1,
+            marginTop: 100,
+            width: 200,
+            borderColor: colors.textMain,
+          }}
+        >
+          <Text style={{ fontWeight: "400", color: colors.textMain }}>
+            新規登録
+          </Text>
         </CustomActionButton>
       </View>
     </View>
