@@ -11,11 +11,10 @@ if (firebase.apps.length === 0) firebase.initializeApp(firebaseConfig);
 
 const App = () => {
   // 学期が変わったらここを変更する
-  // useEffect(()=>{
-  //   firebase.database().ref('subjectsData').push(
-      
-  //   )
-  // },[])
+  useEffect(() => {
+    // firebase.database().ref('subjectsData').push(ここにjsonデータをいれる)
+    // firebase.database().ref("subjectsData").remove();
+  }, []);
   return (
     <Provider store={store}>
       <Root>
