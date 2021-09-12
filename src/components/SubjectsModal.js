@@ -27,11 +27,11 @@ const SubjectsModal = (props) => {
   useEffect(() => {
     const getFireData = () => {
       let db = firebase.database();
-      let ref = db.ref("subjectsData/-MhqtY0BN7-2Kq_imxks");
+      let ref = db.ref("subjectsData/-MjO12sVpz6s6jfbpniD");
       // let ref = db.ref("test/-Mhqs4wqnmXjGpMk05rW");
       ref
         .orderByKey()
-        .limitToFirst(4946)
+        .limitToFirst(9568)
         .on("value", (snapshot) => {
           setData(snapshot.val());
         });

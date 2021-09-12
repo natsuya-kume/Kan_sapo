@@ -2,7 +2,7 @@
   "expo": {
     "name": "Kanさぽ",
     "slug": "Kan-sprt-slug",
-    "version": "1.0.0",
+    "version": "1.0.2",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -11,13 +11,13 @@
       "backgroundColor": "#ffffff"
     },
     "updates": {
-      "enabled":true,
+      "enabled": false,
       "fallbackToCacheTimeout": 30000,
-      "checkAutomatically":"ON_LOAD"
+      "checkAutomatically": "ON_LOAD"
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "buildNumber": "1.0.0",
+      "buildNumber": "1.0.2",
       "bundleIdentifier": "com.timetable.TimeTableApp"
     },
     "web": {
