@@ -2,7 +2,7 @@
   "expo": {
     "name": "Kanさぽ",
     "slug": "Kan-sprt-slug",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -17,7 +17,7 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "buildNumber": "1.0.2",
+      "buildNumber": "1.0.3",
       "bundleIdentifier": "com.timetable.TimeTableApp"
     },
     "web": {

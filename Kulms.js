@@ -1,21 +1,19 @@
 import React, { useState, useMemo } from "react";
 import { StyleSheet, Text, Image, View } from "react-native";
-
 import HomeScreen from "./src/screens/HomeScreen";
 import PublicScreen from "./src/screens/PublicScreen";
 import LogoutScreen from "./src/screens/LogoutScreen";
 import SignUpScreen from "./src/screens/SignUpScreen";
 import LoginScreen from "./src/screens/LoginScreen";
 import TermsDrawerScreen from "./src/screens/TermsDrawerScreen";
+import CreateSubjectScreen from "./src/screens/CreateSubjectScreen";
 import PrivacyPolicyScreen from "./src/screens/AppSwitchNavigator/PrivacyPolicyScreen";
 import WelcomeScreen from "./src/screens/AppSwitchNavigator/WelcomeScreen";
 import CustomDrawerComponent from "./src/screens/DrawerNavigator/CustomDrawerComponent";
 import SplashScreen from "./src/screens/SplashScreen";
 import firebase from "firebase/app";
 import "firebase/auth";
-
 import { useSelector } from "react-redux";
-
 import {
   NavigationContainer,
   getFocusedRouteNameFromRoute,
@@ -34,6 +32,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import useAuthenticateUser from "./src/hooks/useAuthenticateUser";
 import TermsScreen from "./src/screens/AppSwitchNavigator/TermsScreen";
 
@@ -268,6 +267,15 @@ const HomeStackNavigator = ({ navigation }) => {
             onPress={() => navigation.openDrawer()}
           />
         ),
+        headerRight: () => (
+          <Icon
+            name="plus-circle-outline"
+            size={30}
+            color={colors.textMain}
+            style={{ marginRight: 10 }}
+            onPress={() => navigation.navigate("CreateSubject")}
+          />
+        ),
       }}
     >
       <Stack.Screen
@@ -286,6 +294,7 @@ const AppDrawerNavigator = ({ navigation }) => (
     drawerContent={(props) => <CustomDrawerComponent {...props} />}
   >
     <Drawer.Screen name="Home" component={HomeStackNavigator} />
+    <Drawer.Screen name="CreateSubject" component={CreateSubjectScreen} />
     <Drawer.Screen name="Terms" component={TermsDrawerScreen} />
     <Drawer.Screen name="PrivacyPolicy" component={PrivacyPolicyScreen} />
     <Drawer.Screen name="Logout" component={LogoutScreen} />

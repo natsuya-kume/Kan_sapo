@@ -52,9 +52,12 @@ const ListItem = ({ item, onPress, closeModal }) => {
         onPressIn={closeModal}
         onPressOut={() =>
           Toast.show({
-            text: "授業を追加しました",
+            text: "授業を追加しました!",
+            type: "success",
             buttonText: "OK",
-            position: "bottom",
+            position: "top",
+            duration: 2500,
+            style: { marginTop: 20 },
           })
         }
       >

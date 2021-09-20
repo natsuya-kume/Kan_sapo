@@ -233,8 +233,11 @@ const EditSubject = (props) => {
               onPress={() => saveClassroom(classroom, props.editData)}
               onPressIn={() =>
                 Toast.show({
-                  text: "教室を保存しました",
+                  text: "授業教室を保存しました!",
                   buttonText: "OK",
+                  position: "bottom",
+                  type: "success",
+                  duration: 2500,
                 })
               }
             >
@@ -279,8 +282,11 @@ const EditSubject = (props) => {
               onPress={() => saveMemo(memo, props.editData)}
               onPressIn={() =>
                 Toast.show({
-                  text: "メモを保存しました",
+                  text: "メモを保存しました!",
                   buttonText: "OK",
+                  position: "bottom",
+                  type: "success",
+                  duration: 2500,
                 })
               }
             >
@@ -323,8 +329,11 @@ const EditSubject = (props) => {
             onPress={() => saveAbsentCount(absentCount, props.editData)}
             onPressIn={() =>
               Toast.show({
-                text: "欠席回数を保存しました",
+                text: "欠席回数を保存しました!",
                 buttonText: "OK",
+                position: "bottom",
+                type: "success",
+                duration: 2500,
               })
             }
           >
@@ -408,8 +417,12 @@ const EditSubject = (props) => {
             onPress={() => saveBackgroundColor(backgroundColor, props.editData)}
             onPressIn={() =>
               Toast.show({
-                text: "背景色を保存しました",
+                text: "背景色を保存しました!",
                 buttonText: "OK",
+                type: "success",
+                position: "top",
+                duration: 2500,
+                style: { marginTop: 20 },
               })
             }
             onPressOut={props.nav}
@@ -438,9 +451,11 @@ const EditSubject = (props) => {
           onPressIn={props.nav}
           onPressOut={() =>
             Toast.show({
-              text: "削除しました",
+              text: "授業を削除しました!",
               buttonText: "OK",
-              position: "bottom",
+              position: "top",
+              type: "danger",
+              style: { marginTop: 20 },
             })
           }
         >
