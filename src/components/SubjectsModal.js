@@ -1,7 +1,7 @@
 // 授業リストを管理する
 import React, { useEffect, useState } from "react";
 import { Text, View, FlatList, TouchableOpacity } from "react-native";
-import { Form, Item, Input, Label, Icon } from "native-base";
+import { Form, Item, Input, Label, Icon, Toast } from "native-base";
 import ListItem from "./ListItem";
 import { AntDesign } from "@expo/vector-icons";
 import firebase from "firebase/app";
@@ -19,8 +19,11 @@ const SubjectsModal = (props) => {
   const [searchWord, setSearchWord] = useState("");
 
   const user = useSelector((state) => state.auth.currentUser);
+  const subjects = useSelector((state) => state.subjects.selectedSubjects);
+
   const dispatch = useDispatch();
 
+  // テーマの取得
   const { colors } = useTheme();
 
   // モーダルが開閉されるときに元の授業データを取得
@@ -39,43 +42,73 @@ const SubjectsModal = (props) => {
     getFireData();
   }, [props.nav]);
 
-  // 授業の追加ボタンを押した時の関数　引数selectedSubjectには選択された授業の情報が入ってくる
-  const addSubject = async (selectedSubject, index) => {
-    try {
-      // キーを追加
-      const key = await firebase
-        .database()
-        .ref("selectedSubject")
-        .child(user.uid)
-        .push().key;
-
-      // ↑で追加したキーの中にnameとして情報を保存
-      const setSelectedSubject = await firebase
-        .database()
-        .ref("selectedSubject")
-        .child(user.uid)
-        .child(key)
-        .set({ name: selectedSubject, select: true });
-
-      //　授業削除のために必要なkeyを追加する
-      const addKey = await firebase
-        .database()
-        .ref("selectedSubject")
-        .child(user.uid)
-        .child(key)
-        .child("name")
-        .update({ key: key });
-
-      // ユーザーごとに授業内容を取得して、配列に変換する
+  useEffect(() => {
+    // 授業情報の取得
+    const fetchData = async () => {
       const selectedSubjects = await firebase
         .database()
         .ref("selectedSubject")
         .child(user.uid)
         .once("value");
-      // 配列に変換
       const selectedSubjectsArray = snapshotToArray(selectedSubjects);
-
       dispatch(loadSelectedSubjects(selectedSubjectsArray));
+    };
+    fetchData();
+    // ユーザーとdispatchが変更されるたびにsubjectを更新
+  }, [user, dispatch]);
+
+  // 授業の追加ボタンを押した時の関数　引数selectedSubjectには選択された授業の情報が入ってくる
+  const addSubject = async (selectedSubject, index) => {
+    try {
+      // 授業を登録する時に既に同じ時間に登録した授業があるか確認する;
+      if (
+        subjects.some((data) => data.subjectId === selectedSubject.subjectId)
+      ) {
+        // 既に同じ時間に授業を登録していた場合トーストメッセージを表示する
+        return Toast.show({
+          text: "その時間には既に授業を登録しています",
+          type: "warning",
+          buttonText: "OK",
+          position: "top",
+          duration: 2500,
+          style: { marginTop: 20 },
+        });
+      } else {
+        // キーを追加
+        const key = await firebase
+          .database()
+          .ref("selectedSubject")
+          .child(user.uid)
+          .push().key;
+
+        // ↑で追加したキーの中にnameとして情報を保存
+        const setSelectedSubject = await firebase
+          .database()
+          .ref("selectedSubject")
+          .child(user.uid)
+          .child(key)
+          .set({ name: selectedSubject, select: true });
+
+        //　授業削除のために必要なkeyを追加する
+        const addKey = await firebase
+          .database()
+          .ref("selectedSubject")
+          .child(user.uid)
+          .child(key)
+          .child("name")
+          .update({ key: key });
+
+        // ユーザーごとに授業内容を取得して、配列に変換する
+        const selectedSubjects = await firebase
+          .database()
+          .ref("selectedSubject")
+          .child(user.uid)
+          .once("value");
+        // 配列に変換
+        const selectedSubjectsArray = snapshotToArray(selectedSubjects);
+
+        dispatch(loadSelectedSubjects(selectedSubjectsArray));
+      }
     } catch (error) {
       console.log(error);
     }

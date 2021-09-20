@@ -42,6 +42,15 @@ const CustomDrawerComponent = (props) => {
             />
             <DrawerItem
               icon={({ color, size }) => (
+                <Icon name="plus-circle-outline" size={size} color={color} />
+              )}
+              label="授業作成"
+              onPress={() => {
+                props.navigation.navigate("CreateSubject");
+              }}
+            />
+            <DrawerItem
+              icon={({ color, size }) => (
                 <Icon name="note-outline" color={color} size={size} />
               )}
               label="利用規約"
